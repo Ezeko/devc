@@ -61,6 +61,19 @@
     }
       
     /* Add Your CSS From Here */
+	span{
+		display: inline-block;
+		vertical-align: center;
+	}
+	span .material-icons{
+		font-size:150px;
+	}
+	[data-credit-card]{
+		width: 435px;
+		min-height:240px;
+		border-radius: 10px;
+		background-color: #5d6874;
+	}
     </style>
   </head>
   <body>
@@ -69,14 +82,14 @@
     <div alt="data-cart-info">
 		<heading class="mdc-typography--headline4">
 			<span class="material-icons" content="shopping_cart"></span>
-			<span data-bill></span>
+			<span alt="data-bill"></span>
 		</heading>
 	</div>
 	<div alt="data-credit-card" class="mdc-card, mdc-card--outlined">
 		<div class="mdc-card__primary-action">
 			<img alt="data-card-type" src="https://placehold.it/120x60.png?text=Card">
 			<div alt="data-cc-digits">
-				<input maxlength="4" placeholder="----">
+				<input type="" maxlength="4" placeholder="----">
 				<input maxlength="4" placeholder="----">
 				<input maxlength="4" placeholder="----">
 				<input maxlength="4" placeholder="----">
@@ -84,10 +97,10 @@
 			</div>
 			<div alt="data-cc-info">
 				<input type="text" maxlength="20" placeholder="Name Surname">
-				<input type="date" maxlength="6" placeholder="MM/YY">
+				<input  maxlength="6" placeholder="MM/YY">
 			</div>
 		</div>
-
+	<button class="mdc-button" alt="data-pay-btn">Pay Now</button>
 	</div>
     <script>
       
