@@ -80,22 +80,27 @@
 		height: 60px;
 	}
 	#data-cc-digits{
-		margin-top: 2em;
-		input{
+		margin-top: 2em;}
+	#data-cc-digits input{
 			color: white;
 			font-size: 2em;
 			line-height: 2em;
 			border: none;
 			background: none;
 			margin-right: 0.5em;
-		}
 	}
 	#data-cc-info{
 		margin-top:1em;
-		input{
+	}
+		#data-cc-info input{
+			color:white;
+			font-size:1.2em;
+			border:none;
+			background:none;
+		}
+		#data-cc-info input input2{
 			
 		}
-	}
     </style>
   </head>
   <body>
@@ -119,7 +124,7 @@
 			</div>
 			<div id="data-cc-info">
 				<input type="text" maxlength="20" placeholder="Name Surname">
-				<input  maxlength="6" placeholder="MM/YY">
+				<input name="input2" maxlength="6" placeholder="MM/YY">
 			</div>
 		</div>
 	<button class="mdc-button" id="data-pay-btn">Pay Now</button>
