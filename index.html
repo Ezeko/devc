@@ -61,27 +61,30 @@
     }
       
     /* Add Your CSS From Here */
+	.material-icons::after{
+		content: "shopping_cart";
+	}
 	span{
 		display: inline-block;
 		vertical-align: center;
 	}
-	span .material-icons{
+	.material-icons span{
 		font-size:150px;
 	}
-	#data-credit-card{
+	[data-credit-card]{
 		width: 435px;
 		min-height:240px;
 		border-radius: 10px;
 		background-color: #5d6874;
 	}
-	#data-card-type{
+	[data-card-type]{
 		display: block;
 		width: 120px;
 		height: 60px;
 	}
-	#data-cc-digits{
+	[data-cc-digits]{
 		margin-top: 2em;}
-	#data-cc-digits input{
+	[data-cc-digits] input{
 			color: white;
 			font-size: 2em;
 			line-height: 2em;
@@ -89,43 +92,50 @@
 			background: none;
 			margin-right: 0.5em;
 	}
-	#data-cc-info{
+	[data-cc-info]{
 		margin-top:1em;
 	}
-		#data-cc-info input{
+		[data-cc-info] input{
 			color:white;
 			font-size:1.2em;
 			border:none;
 			background:none;
 		}
-		#input2{
+		[data-cc-info] input:nth-child(2){
 			padding-right:10px;
 			float: right;
 		}
+		#data-pay-btn{
+			position: fixed;
+			width:90%
+			border: 1px solid;
+			bottom:20px;
+		}
+
     </style>
   </head>
   <body>
     
     <!-- your HTML goes here -->
-    <div id="data-cart-info">
+    <div data-cart-info>
 		<heading class="mdc-typography--headline4">
-			<span class="material-icons" content="shopping_cart"></span>
+			<span class="material-icons"></span>
 			<span id="data-bill"></span>
 		</heading>
 	</div>
-	<div id="data-credit-card" class="mdc-card, mdc-card--outlined">
+	<div data-credit-card class="mdc-card mdc-card--outlined">
 		<div class="mdc-card__primary-action">
-			<img id="data-card-type" src="https://placehold.it/120x60.png?text=Card">
-			<div id="data-cc-digits">
-				<input type="" maxlength="4" placeholder="----">
-				<input maxlength="4" placeholder="----">
-				<input maxlength="4" placeholder="----">
-				<input maxlength="4" placeholder="----">
+			<img data-card-type src="https://placehold.it/120x60.png?text=Card">
+			<div data-cc-digits>
+				<input type="text" size="4" placeholder="----">
+				<input type="text" size="4" placeholder="----">
+				<input type="text" size="4" placeholder="----">
+				<input type="text" size="4" placeholder="----">
 
 			</div>
-			<div id="data-cc-info">
-				<input type="text" maxlength="20" placeholder="Name Surname">
-				<input id="input2" maxlength="6" placeholder="MM/YY">
+			<div data-cc-info>
+				<input type="text" size="20" placeholder="Name Surname">
+				<input type="text" size="6" placeholder="MM/YY">
 			</div>
 		</div>
 	<button class="mdc-button" id="data-pay-btn">Pay Now</button>
