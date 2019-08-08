@@ -231,8 +231,8 @@
 	  const displayCartTotal = (data)=>{
 		  let [data]= results[0];
 		  let {itemsInCart, buyerCountry} = data;
-		  const appState.items =  itemsInCart;
-		  const appState.country = buyerCountry;
+		  appState.items =  itemsInCart;
+		  appState.country = buyerCountry;
 		  itemsInCart.reduce((acc, qty) => {
 			 return appState.bill = acc + qty;
 		  }, 0);
