@@ -119,7 +119,7 @@
     <div data-cart-info>
 		<heading class="mdc-typography--headline4">
 			<span class="material-icons">shopping_cart</span>
-			<span data-bill></span>
+			<span data-bill> appState.billFormatted</span>
 		</heading>
 	</div>
 	<div data-credit-card class="mdc-card mdc-card--outlined">
@@ -221,7 +221,9 @@
       };
       const appState = {};
 	  const formatAsMoney= (amount, buyerCountry='United States')=>{
-		return amount.toLocaleString(`${buyerCountry}`);
+		 amount.toLocaleString(countries.filter((buyerCountry) =>{
+			return (buyerCountry === `${buyerCountry}`);
+		}));
 	  }
 	  const detectCardType= (first4Digits) =>{}
 	  const validateCardExpiryDate = ()=> {}
@@ -236,6 +238,8 @@
 		  itemsInCart.reduce((acc, qty) => {
 			 return appState.bill = acc + qty;
 		  }, 0);
+		  appState.cardDigits = [];
+		  formatAsMoney(appState.bill, appState.country);
 		  uiCanInteract();
 	  }
 
