@@ -11,7 +11,6 @@
     <style>
       body {
       margin: 0;
-	  background-color:white;
       padding: 1em;
     }
 
@@ -59,20 +58,20 @@
     ::placeholder {
       color: #fff;
     }
-      
     /* Add Your CSS From Here */
-	.material-icons::after{
-		content: "shopping_cart";
+	body{
+		background-color: #fff;
 	}
-	span{
+	[data-cart-info] span{
 		display: inline-block;
-		vertical-align: center;
-	}
-	.material-icons span{
+		vertical-align: middle;
 		font-size:150px;
 	}
+	.material-icons span{
+		font-size: 150px;
+	}
 	[data-credit-card]{
-		width: 435px;
+		width:435px;
 		min-height:240px;
 		border-radius: 10px;
 		background-color: #5d6874;
@@ -83,35 +82,34 @@
 		height: 60px;
 	}
 	[data-cc-digits]{
-		margin-top: 2em;}
-	[data-cc-digits] input{
-			color: white;
-			font-size: 2em;
-			line-height: 2em;
-			border: none;
-			background: none;
-			margin-right: 0.5em;
+		margin-top: 2em;
+	}
+	[data-cc-digits] input {
+		color: white;
+		font-size:2em;
+		line-height:2em;
+		border: 0;
+		background: none;
+		margin-right: 0.5em;
 	}
 	[data-cc-info]{
-		margin-top:1em;
+		margin-top: 1em;
 	}
-		[data-cc-info] input{
-			color:white;
-			font-size:1.2em;
-			border:none;
-			background:none;
-		}
-		[data-cc-info] input:nth-child(2){
-			padding-right:10px;
-			float: right;
-		}
-		#data-pay-btn{
-			position: fixed;
-			width:90%
-			border: 1px solid;
-			bottom:20px;
-		}
-
+	[data-cc-info] input{
+		color: #fff;
+		font-size: 1.2em;
+		border: 0;
+		background: none;
+	}
+	[data-cc-info] input:nth-child(2){
+		padding-right:10px;
+	}
+	[data-pay-btn]{
+		position:fixed;
+		width: 90%;
+		border: 1px solid;
+		bottom: 20px;
+	}
     </style>
   </head>
   <body>
@@ -119,8 +117,8 @@
     <!-- your HTML goes here -->
     <div data-cart-info>
 		<heading class="mdc-typography--headline4">
-			<span class="material-icons"></span>
-			<span id="data-bill"></span>
+			<span class="material-icons">shopping_cart</span>
+			<span data-bill></span>
 		</heading>
 	</div>
 	<div data-credit-card class="mdc-card mdc-card--outlined">
@@ -134,12 +132,13 @@
 
 			</div>
 			<div data-cc-info>
-				<input type="text" size="20" placeholder="Name Surname">
+			<input type="text" size="20" placeholder="Name Surname">
 				<input type="text" size="6" placeholder="MM/YY">
 			</div>
 		</div>
-	<button class="mdc-button" id="data-pay-btn">Pay Now</button>
+
 	</div>
+	<button class="mdc-button" data-pay-btn>Pay Now</button>
     <script>
       
       const supportedCards = {
