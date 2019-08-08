@@ -229,19 +229,18 @@
 	  const validateCardHolderName = () =>{}
 
 	  const uiCanInteract= ()=>{}
-	  const displayCartTotal = (data)=>{
-		  let [data]= results[0];
-		  let {itemsInCart, buyerCountry} = data;
+	  const displayCartTotal = ({results})=>{
+		  const [data]= results;
+		  const {itemsInCart, buyerCountry} = data;
 		  appState.items =  itemsInCart;
 		  appState.country= buyerCountry;
-		  itemsInCart.reduce((acc, qty) => {
-			 return appState.bill = acc + qty;
+		  appState.bill = itemsInCart.reduce((acc, num) => {
+			 return acc + (mum.qty * num.price);
 		  }, 0);
-			const span =document.querySelector("[data-bill]");
-			let app= document.createTextNode(appState.billFormatted);
-			document.write(span.appendChild(app));
 		  appState.cardDigits = [];
 		  appState.billFormatted = formatAsMoney(appState.bill, appState.country);
+		  let databill = document.querySelector('[data-bill');
+		  databill.textContent = appState.billFormatted;
 		  uiCanInteract();
 	  }
 
