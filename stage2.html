@@ -219,7 +219,7 @@
           }
         });
       };
-      let appState = {};
+      const appState = {};
 	  const formatAsMoney= (amount, buyerCountry)=>{
 
 	  }
@@ -228,8 +228,15 @@
 	  const validateCardHolderName = () =>{}
 
 	  const uiCanInteract= ()=>{}
-	  const displayCartTotal = (total=0)=>{
-		  return (`'Total Cart: ', ${total}`);
+	  const displayCartTotal = (data)=>{
+		  let [data]= results[0];
+		  let {itemsInCart, buyerCountry} = data;
+		  const appState.items =  itemsInCart;
+		  const appState.country = buyerCountry;
+		  itemsInCart.reduce((acc, qty) => {
+			 return appState.bill = acc + qty;
+		  }, 0);
+		  uiCanInteract();
 	  }
 
 
@@ -237,10 +244,14 @@
         const apiHost = 'https://randomapi.com/api';
 		const apiKey = '006b08a801d82d0c9824dcfdfdfa3b3c';
 		const apiEndpoint = `${apiHost}/${apiKey}`;
-        
+        fetch(apiEndpoint)
+		.then(response=>{return response.json()})
+		.then(data=>{displayCartTotal(data)})
+		.catch(error=>console.error(error));
       };
       
       const startApp = () => {
+		  fetchBill();
       };
 
       startApp();
