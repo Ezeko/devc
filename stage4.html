@@ -248,7 +248,24 @@
 		  const firstDigit = first4Digits[0];
 		  const cardType = firstDigit == 4 ? 'is-visa' : firstDigit == 5 ? 'is-mastercard' : '';
 		  const creditCard = document.querySelector('[data-credit-card]');
-	  }
+		const cardTypeField = document.querySelector('[data-card-type');
+		if (cardType=== 'is-visa'){
+			creditCard.classList.add('is-visa');
+			creditCard.classList.remove('is-mastercard');
+			cardTypeField.src= supportedCards.visa;
+		}
+		else if (cardType==='is-mastercard'){
+			creditCard.classList.add('is-mastercard');
+			creditCard.classList.remove('is-visa');
+			cardTypeField.src = supportedCards.mastercard;
+		}
+		else {
+			creditCard.classList.remove('is-mastercard');
+			creditCard.classList.remove('is-visa');
+			cardTypeField.src = "https://placehold.it/120x60.png?text=Card";
+		}
+		return cardType;
+	  };
 	  //code to validate expiry date
 	  const validateCardExpiryDate = ()=> {
 		  const dateField = document.querySelector("[data-cc-info] input:nth-child(2)");
@@ -275,7 +292,7 @@
 
 const validateWithLuhn =(digits) =>{
 	let value = digits.join('');
-	if (/[^0-9-\s]+/.test(value)])){return false;}
+	if (/[^0-9-\s]+/.test(value)){return false;}
 	let nCheck = 0, nDigit = 0, bEven = false;
 	value = value.replace(/\D/g, '');
 	for (let n = valu.length -1; n>=0; n--){
@@ -297,7 +314,7 @@ const validateWithLuhn =(digits) =>{
 		  const cardInputs = appState.cardDigits.flat();
 		  const isValid = validateWithLuhn(cardInputs);
 		  const creditCardField = document.querySelector('[data-cc-digits]');
-		  if isValid?  creditCardField.classList.remove('is-invalid') : creditCardField.classList.add('is-invalid');
+		  isValid ?  creditCardField.classList.remove('is-invalid') : creditCardField.classList.add('is-invalid');
 		  return isValid;
 
 	  }
@@ -346,7 +363,7 @@ const dateField = document.querySelector("[data-cc-info] input:nth-child(2)");
 			setTimeout(()=>{
 				if (fieldIndex<3 && isFinite(e)){
 					cardInputField.value = cardInputField.value.substr(0, cardValue.length);
-					cardInputField.value + = '*';
+					cardInputField.value += '#';
 				};
 				if (fieldIndex==0){
 					detectCardType(appState.cardDigits[0]);
@@ -355,7 +372,7 @@ const dateField = document.querySelector("[data-cc-info] input:nth-child(2)");
 			smartCursor(event,fieldIndex, fields);
 		}
 		if (fieldIndex==4){
-			if(!validCharacters $$ ~/^[a-zA-Z]$/.test(e) && event.code !='Space'){
+			if(!validCharacters && !/^[a-zA-Z]$/.test(e) && event.code !='Space'){
 				event.preventDefault();
 			}else{
 				smartCursor(event, fieldIndex, fields);
