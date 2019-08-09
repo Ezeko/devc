@@ -65,9 +65,8 @@
 	[data-cart-info] span{
 		display: inline-block;
 		vertical-align: middle;
-		font-size:150px;
 	}
-	.material-icons span{
+	[data-cart-info] span:nth-child(1){
 		font-size: 150px;
 	}
 	[data-credit-card]{
@@ -328,19 +327,8 @@ const validateWithLuhn =(digits) =>{
 	  
 
 //smart typing
-	  const enableSmartTyping = ()=>{
-	const firstCardInput= document.querySelector("[data-cc-digits] input:nth-child(1)");
-	const secondCardInput = document.querySelector("[data-cc-digits] input:nth-child(2)");
-const thirdCardInput = document.querySelector("[data-cc-digits] input:nth-child(3)");
-const fourthCardInput = document.querySelector("[data-cc-digits] input:nth-child(4)");
-const nameField = document.querySelector("[data-cc-info] input:nth-child(1)");
-const dateField = document.querySelector("[data-cc-info] input:nth-child(2)");
-	const fields =[firstCardInput, secondCardInput, thirdCardInput, fourthCardInput, nameField, dateField];
-	fields.forEach((field,index,fields)=>{
-		smartInput(event, index, fields)
-	});
-	  }
-	  const smartCursor =(event, fieldIndex, fields,)=>{
+
+	  const smartCursor =(event, fieldIndex, fields)=>{
 		  console.log(fields[fieldIndex].size)
 		  setTimeout(()=>{
 			  if (fieldIndex<3){
@@ -352,51 +340,72 @@ const dateField = document.querySelector("[data-cc-info] input:nth-child(2)");
 	  };
 	  //smart input script
 	  const smartInput = (event, fieldIndex, fields)=>{
-	const e = event.key;
-	const validCharacters = e =='Backspace' || e == 'Tab' || e =='Shift' || e == 'ArrowDown' || e == 'ArrowRight' || e =='ArrowUp' || e == 'ArrowLeft';
-	if (fieldIndex<4){
-		if (!isFinite(e) && !validCharacters){
-			event.preventDefault();
-		}
-		else{
-			const cardInputField = document.querySelector(`[data-cc-digits] input:nth-child(${fieldIndex + 1})`);
-			let cardValue = cardInputField.value;
-			const firstField = document.querySelector('[data-cc-digits] input:nth-child(1)').value.length;
-			if (appState.cardDigits[fieldIndex]== undefined && isFinite(e)){
-		appState.cardDigits[fieldIndex] = [];
-		appState.cardDigits[fieldIndex].push(e);
-		const digits = appState.cardDigits[0];
-		detectCardType(digits);
-			}else if (isFinite(e)){
-				appState.cardDigits[fieldIndex].push(e);
-			}
-			setTimeout(()=>{
-				if (fieldIndex<3 && isFinite(e)){
-					cardInputField.value = cardInputField.value.substr(0, cardValue.length);
-					cardInputField.value += '#';
-				};
-				if (fieldIndex == 0){
-					detectCardType(appState.cardDigits[0]);
-				};
-			}, 500);
-			smartCursor(event,fieldIndex, fields);
-		}}
-		else if (fieldIndex == 4){
-			if(!validCharacters && !/^[a-zA-Z]$/.test(e) && event.code !='Space'){
-				event.preventDefault();
-			}else{
-				smartCursor(event, fieldIndex, fields);
-			}
-		}
-		else if (fieldIndex == 5){
-			if (!validCharacters && !/^[0-9]$/.test(e)){
-				event.preventDefault();
-			}else{
-				smartCursor(event, fieldIndex, fields);
-			}
-		}
-	  };
+		  const regexNumber = /^\d{1}$/;
+		  const regexName = /^[a-zA-Z]\. ]+$/;
+		  const regexDate = /^[0-9/]+$/;
+		  let regex = '';
+		  let text = '';
+		  if (fieldIndex<=3){
+			  regex = regexNumber;
+		  }else if(fieldIndex==4){
+			  regex = regexName;
+		  }else if(fieldIndex==5){
+			  regex =regexDate
+		  }
+		  const key = event.key;
+		  const target = event.target;
+		  const navigation =['ArrowUp', 'Arrowdown', 'ArrowRight', 'ArrowLeft','Backspace', 'Tab', 'Shift'];
+		  const isValid = regex.test(key);
 
+		  if(isValid || navigation.includes(key)){
+			  if(!navigation.includes(key)){
+				  if (fieldIndex <= 3){
+					  appState.cardDigits[fieldIndex].push(key);
+					  fields[fieldIndex].addEventListener('keydown', (event)=> {
+						  smartCursor(event, fieldIndex, fields);
+					  })
+					  const first4Digits = appState.cardDigits[0];
+					  if (fieldIndex == 0){
+						  detectCardType(first4Digits)}
+						  const maskText = () =>{
+							  if (fieldIndex == 3) return false
+							 if(appState.cardDigits){ if (appState.cardDigits[fieldIndex].length==1){
+								  target.value ="#";
+								  					  }else if(appState.cardDigits[fieldIndex].length == 2){
+															target.value ="##";
+														}else if(appState.cardDigits[fieldIndex].length == 3){target.value= "###";
+														}else if(appState.cardDigits[fieldIndex].length == 4){target.value ="####";}
+						  }
+					  }
+					  setTimeout(()=>{
+						  maskText();
+					  }, 500)
+				  }
+			  }else{
+				  if (fieldIndex <=3){
+					  appState.cardDigits[fieldIndex].pop();
+				  }
+			  }
+		  }else{
+			  event.preventDefault();
+		  }
+	  }
+
+//enable smart typing
+const enableSmartTyping = ()=>{
+	const cardInputOne = document.querySelector("[data-cc-digits] input:nth-child(1)");
+	const cardInputTwo = document.querySelector("[data-cc-digits] input:nth-child(2)");
+	const cardInputThree = document.querySelector("[data-cc-digits] input:nth-child(3)");
+	const cardInputFour = document.querySelector("[data-cc-digits] input:nth-child(4)");
+	const nameField = document.querySelector("[data-cc-info] input:nth-child(1)");
+	const dataField = document.querySelector("[data-cc-info] input:nth-child(2)");
+	const fields = [cardInputOne, cardInputTwo, cardInputThree, cardInputFour, nameField, dateField];
+	fields.forEach((field, index, fields)=>{
+		field.addEventListener('keydown', (event)=>{
+		smartInput(event, index, fields)
+		});
+	});
+};
 	  const uiCanInteract= ()=>{
 		  document.querySelector('[data-cc-digits] input:nth-child(1)').focus();
 		  document.querySelector('[data-pay-btn]').addEventListener('click', validatePayment);
