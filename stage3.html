@@ -254,7 +254,7 @@
 				if (isValid === true){
 					const cardMonth = Number(dateValue.split('/')[0])-1;
 					const cardYear = Number(`20${dateValue.split('/')[1]}`);
-					const cardDate = new Date(cardMonth, cardYear);
+					const cardDate = new Date(cardYear, cardMonth);
 					isValid = cardDate > datePresent;
 				}
 				flagIfInvalid(fieldDate, isValid);
