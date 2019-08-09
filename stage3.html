@@ -244,10 +244,12 @@
 		}
 
 	  const detectCardType= (first4Digits) =>{}
+
+	  //script to validate card expiry date here
 	  const validateCardExpiryDate = ()=> {
-		  const datePresent =new Date();
+		  const datePresent = new Date();
 		  const fieldDate = document.querySelector("[data-cc-info] input:nth-child(2)");
-		  const dateValue = datePresent.value;
+		  const dateValue = fieldDate.value;
 		  	  let isValid = expiryDateFormatIsValid(fieldDate);
 				if (isValid === true){
 					const cardMonth = Number(dateValue.split('/')[0])-1;
