@@ -124,14 +124,14 @@
 	<div data-credit-card class="mdc-card mdc-card--outlined">
 		<div class="mdc-card__primary-action">
 			<img data-card-type src="https://placehold.it/120x60.png?text=Card">
-			<div data-cc-digits>
+			<div data-cc-digits onblur="smartInput()">
 				<input type="text" size="4" placeholder="----">
 				<input type="text" size="4" placeholder="----">
 				<input type="text" size="4" placeholder="----">
 				<input type="text" size="4" placeholder="----">
 
 			</div>
-			<div data-cc-info>
+			<div data-cc-info onblur="smartInput()">
 			<input type="text" size="20" placeholder="Name Surname">
 				<input type="text" size="6" placeholder="MM/YY">
 			</div>
@@ -294,7 +294,7 @@ const validateWithLuhn =(digits) =>{
 	if (/[^0-9-\s]+/.test(value)){return false;}
 	let nCheck = 0, nDigit = 0, bEven = false;
 	value = value.replace(/\D/g, '');
-	for (let n = valu.length -1; n>=0; n--){
+	for (let n = value.length -1; n>=0; n--){
 		const cDigit = value.charAt(n);
 		let nDigit = parseInt(cDigit, 10);
 		if (bEven){
@@ -324,27 +324,14 @@ const validateWithLuhn =(digits) =>{
 		  validateCardExpiryDate();
 	  }
 	  
-	  
-
-//smart typing
-
-	  const smartCursor =(event, fieldIndex, fields)=>{
-		  console.log(fields[fieldIndex].size)
-		  setTimeout(()=>{
-			  if (fieldIndex<3){
-				  if (fields[fieldIndex +1].focus());
-
-			  }
-		  }, 500)
-
-	  };
+	
 	  //smart input script
 	  const smartInput = (event, fieldIndex, fields)=>{
 		  const regexNumber = /^\d{1}$/;
 		  const regexName = /^[a-zA-Z]\. ]+$/;
 		  const regexDate = /^[0-9/]+$/;
-		  let regex = '';
-		  let text = '';
+		  var regex;
+		  var text;
 		  if (fieldIndex<=3){
 			  regex = regexNumber;
 		  }else if(fieldIndex==4){
@@ -356,12 +343,15 @@ const validateWithLuhn =(digits) =>{
 		  const target = event.target;
 		  const navigation =['ArrowUp', 'Arrowdown', 'ArrowRight', 'ArrowLeft','Backspace', 'Tab', 'Shift'];
 		  const isValid = regex.test(key);
-
+		
 		  if(isValid || navigation.includes(key)){
 			  if(!navigation.includes(key)){
 				  if (fieldIndex <= 3){
-					  appState.cardDigits[fieldIndex].push(key);
-					  fields[fieldIndex].addEventListener('keydown', (event)=> {
+					fields[fieldIndex].addEventListener('keydown', (event)=>{
+						  appState.cardDigits[fieldIndex].push(regex);
+					  })
+					  
+				fields[fieldIndex].addEventListener('keyup', (event)=> {
 						  smartCursor(event, fieldIndex, fields);
 					  })
 					  const first4Digits = appState.cardDigits[0];
@@ -399,13 +389,26 @@ const enableSmartTyping = ()=>{
 	const cardInputFour = document.querySelector("[data-cc-digits] input:nth-child(4)");
 	const nameField = document.querySelector("[data-cc-info] input:nth-child(1)");
 	const dataField = document.querySelector("[data-cc-info] input:nth-child(2)");
-	const fields = [cardInputOne, cardInputTwo, cardInputThree, cardInputFour, nameField, dateField];
+	const fields = [cardInputOne, cardInputTwo, cardInputThree, cardInputFour, nameField, dataField];
 	fields.forEach((field, index, fields)=>{
 		field.addEventListener('keydown', (event)=>{
 		smartInput(event, index, fields)
 		});
 	});
 };
+
+//smart cursor
+const smartCursor= (event, fieldIndex, fields) =>{
+	const size = fields[fieldIndex].size;
+	const textLength = fields[fieldIndex].value.length;
+	if (textLength == size){
+		if (fieldIndex<fields.length -1){
+			setTimeout(()=>{
+				fields[fieldIndex + 1].focus()
+			}, 500);
+		}
+	}
+}
 	  const uiCanInteract= ()=>{
 		  document.querySelector('[data-cc-digits] input:nth-child(1)').focus();
 		  document.querySelector('[data-pay-btn]').addEventListener('click', validatePayment);
